@@ -13,10 +13,21 @@ const connectDB = async () => {
     secretName: MONGODB_SECRET_NAME!,
     region: REGION!,
   });
-  console.log("DB Connection => using new database connection");
-  await mongoose.connect(cognitoSecrets["mongoDBUri"]);
+  const mongoUser = cognitoSecrets["dbUser"];
+  const mongoPassword = cognitoSecrets["dbPassword"];
+  const connectionString = cognitoSecrets["connectionString"].replace(
+    "mongodb+srv://",
+    "",
+  );
+  const URI = `mongodb+srv://${mongoUser}:${mongoPassword}@${connectionString}`;
 
-  isConnected = true;
+  try {
+    console.log("DB Connection => using new database connection", URI);
+    await mongoose.connect(URI);
+    isConnected = true;
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 export default connectDB;

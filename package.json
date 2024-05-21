@@ -4,18 +4,22 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "local:create-product": " npx ts-node local/index.ts -- create-product"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.138",
     "@types/node": "^20.12.12",
     "prettier": "^3.2.5",
+    "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   },
   "dependencies": {
     "@aws-sdk/client-secrets-manager": "^3.580.0",
+    "aws-lambda": "^1.0.7",
     "mongoose": "^8.4.0"
   }
 }

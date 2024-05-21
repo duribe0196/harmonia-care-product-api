@@ -1,8 +1,13 @@
+import { APIGatewayEvent, Context, Callback } from "aws-lambda";
 import { getNotFoundResponse } from "./utils";
 import createProduct from "./http/create-product";
 import connectDB from "./db";
 
-export const handleHttpRequests = async (event: any, context: any) => {
+export const handleHttpRequests = async (
+  event: APIGatewayEvent,
+  context: Context,
+  callback: Callback,
+) => {
   const httpMethod = event.httpMethod;
   const path = event.path;
   console.log(
@@ -31,12 +36,15 @@ export const handleHttpRequests = async (event: any, context: any) => {
       const price = requestBody.price;
       const description = requestBody.description;
       const stock = requestBody.stock;
-      return await createProduct({
-        name,
-        description,
-        price,
-        stock,
-      });
+      return await createProduct(
+        {
+          name,
+          description,
+          price,
+          stock,
+        },
+        callback,
+      );
 
     default:
       return getNotFoundResponse(path, httpMethod);
