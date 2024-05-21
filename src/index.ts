@@ -1,6 +1,10 @@
-import {handleHttpRequests} from "./handlers";
+import { APIGatewayEvent, Context, Callback } from "aws-lambda";
+import { handleHttpRequests } from "./handlers";
 
-export const handler =  async (event: any, context: any): Promise<any> => {
-    return handleHttpRequests(event, context);
+export const handler = async (
+  event: APIGatewayEvent,
+  context: Context,
+  callback: Callback,
+): Promise<any> => {
+  return handleHttpRequests(event, context, callback);
 };
-
