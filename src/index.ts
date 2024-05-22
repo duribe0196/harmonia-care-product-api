@@ -6,5 +6,5 @@ export const handler = async (
   context: Context,
   callback: Callback,
 ): Promise<any> => {
-  return handleHttpRequests(event, context, callback);
+  return await handleHttpRequests(event, context, callback);
 };
