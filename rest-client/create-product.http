@@ -1,0 +1,13 @@
+### GET request to example server
+POST {{baseUrl}}/product/create
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "name": "test product",
+  "price": 20000,
+  "description": "test description",
+  "stock": 1
+}
+
+###
