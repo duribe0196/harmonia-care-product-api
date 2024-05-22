@@ -1,3 +1,5 @@
+import * as dotenv from "dotenv";
+dotenv.config();
 import { APIGatewayEvent, Context, Callback } from "aws-lambda";
 import { getNotFoundResponse } from "./utils";
 import createProduct from "./http/create-product";
