@@ -6,9 +6,9 @@ import { MongoError } from "./common";
 export default async function createProduct(
   args: IProduct,
   callback: Callback,
-): Promise<void> {
+): Promise<{ body: string; statusCode: number }> {
   const { price, stock, name, description } = args;
-  console.log("create product - creating product", name);
+  console.log("Create product - creating product", name);
   const productPrice = new Price(price.amount);
   const newProduct = new Product({
     name,
@@ -18,23 +18,23 @@ export default async function createProduct(
   });
   try {
     const savedProduct = await newProduct.save();
-    callback(null, {
+    return {
       statusCode: 200,
       body: JSON.stringify(savedProduct),
-    });
+    };
   } catch (e: unknown) {
+    console.error(e);
     const mongoError = e as MongoError;
     if (mongoError.code === 11000) {
-      callback(null, {
+      return {
         statusCode: 400,
         body: JSON.stringify({ message: "Product name already exists" }),
-      });
+      };
     } else {
-      callback(null, {
+      return {
         statusCode: 500,
         body: JSON.stringify({ message: "Error saving product" }),
-      });
+      };
     }
-    console.error(mongoError);
   }
 }
