@@ -3,11 +3,18 @@ import User, { UserRole } from "../db/models/user";
 import { Price } from "./Price";
 import { MongoError } from "./common";
 
+interface ICreateProductArgs {
+  productData: Omit<IProduct, "createdBy" | "id">;
+  userSub: string;
+}
+
 export default async function createProduct(
-  args: Omit<IProduct, "createdBy">,
-  userSub: string,
+  args: ICreateProductArgs,
 ): Promise<{ body: string; statusCode: number }> {
-  const { price, stock, name, description } = args;
+  const {
+    productData: { price, stock, name, description },
+    userSub,
+  } = args;
   console.log("Create product - creating product", name);
 
   try {

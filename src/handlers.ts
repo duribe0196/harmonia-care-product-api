@@ -2,6 +2,7 @@ import * as dotenv from "dotenv";
 dotenv.config();
 import { APIGatewayEvent, Context, Callback } from "aws-lambda";
 import { getNotFoundResponse } from "./utils";
+import updateProduct from "./http/update-product";
 import createProduct from "./http/create-product";
 import getProducts from "./http/get-products";
 import connectDB from "./db";
@@ -32,6 +33,8 @@ export const handleHttpRequests = async (
   }
 
   const resource = `${httpMethod}-${path}`;
+  const userSub = event.requestContext.authorizer?.claims?.sub;
+
   await connectDB();
   switch (resource) {
     case "POST-/product/create":
@@ -39,19 +42,31 @@ export const handleHttpRequests = async (
       const price = requestBody.price;
       const description = requestBody.description;
       const stock = requestBody.stock;
-      const userSub = event.requestContext.authorizer?.claims?.sub;
-      return await createProduct(
-        {
-          name,
-          description,
-          price,
-          stock,
-        },
+      return await createProduct({
+        productData: { name, description, price, stock },
         userSub,
-      );
+      });
 
     case "GET-/product":
       return await getProducts(event);
+
+    case `PUT-/product/${event.pathParameters?.productId}`:
+      const productId = event.pathParameters?.productId;
+      if (!productId)
+        return {
+          statusCode: 400,
+          body: JSON.stringify({ message: "Invalid product id" }),
+        };
+      return await updateProduct({
+        productData: {
+          name: requestBody.name,
+          stock: requestBody.stock,
+          description: requestBody.description,
+          price: requestBody.price,
+        },
+        userSub,
+        productId,
+      });
 
     default:
       return getNotFoundResponse(path, httpMethod);

@@ -6,6 +6,7 @@ export interface IPrice {
 }
 
 export interface IProduct {
+  id: Types.ObjectId;
   name: string;
   description: string;
   price: IPrice;
