@@ -39,6 +39,7 @@ export const handleHttpRequests = async (
       const price = requestBody.price;
       const description = requestBody.description;
       const stock = requestBody.stock;
+      const userSub = event.requestContext.authorizer?.claims?.sub;
       return await createProduct(
         {
           name,
@@ -46,7 +47,7 @@ export const handleHttpRequests = async (
           price,
           stock,
         },
-        callback,
+        userSub,
       );
 
     case "GET-/product":

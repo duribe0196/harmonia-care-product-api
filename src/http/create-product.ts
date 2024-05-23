@@ -1,22 +1,40 @@
 import Product, { IProduct } from "../db/models/product";
+import User, { UserRole } from "../db/models/user";
 import { Price } from "./Price";
-import { Callback } from "aws-lambda";
 import { MongoError } from "./common";
 
 export default async function createProduct(
-  args: IProduct,
-  callback: Callback,
+  args: Omit<IProduct, "createdBy">,
+  userSub: string,
 ): Promise<{ body: string; statusCode: number }> {
   const { price, stock, name, description } = args;
   console.log("Create product - creating product", name);
-  const productPrice = new Price(price.amount);
-  const newProduct = new Product({
-    name,
-    description,
-    price: productPrice,
-    stock,
-  });
+
   try {
+    const user = await User.findOne({ sub: userSub });
+    if (!user) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ message: "User not found" }),
+      };
+    }
+    if (user.role != UserRole.OWNER) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({
+          message: "User does not have privileges to create a product",
+        }),
+      };
+    }
+
+    const productPrice = new Price(price.amount);
+    const newProduct = new Product({
+      name,
+      description,
+      price: productPrice,
+      stock,
+      createdBy: user._id,
+    });
     const savedProduct = await newProduct.save();
     return {
       statusCode: 200,

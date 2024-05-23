@@ -6,6 +6,7 @@ export enum UserRole {
 }
 
 interface IUser {
+  sub: string;
   name: string;
   contactNumber: string;
   email: string;
@@ -17,11 +18,12 @@ type IUserDocument = IUser & Document;
 
 const userSchema: Schema = new Schema(
   {
-    name: { type: String, required: true },
-    contactNumber: { type: String, required: true, unique: true },
-    email: { type: String, unique: true },
+    name: { type: String },
+    contactNumber: { type: String, unique: true },
+    email: { type: String, unique: true, required: true },
     address: { type: String },
     role: { type: String, required: true, enum: Object.values(UserRole) },
+    sub: { type: String, required: true, unique: true },
   },
   { timestamps: true },
 );

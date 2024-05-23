@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema } from "mongoose";
+import mongoose, { Document, Schema, Types } from "mongoose";
 
 export interface IPrice {
   amount: number;
@@ -10,6 +10,7 @@ export interface IProduct {
   description: string;
   price: IPrice;
   stock: number;
+  createdBy: Types.ObjectId;
 }
 
 type IProductDocument = IProduct & Document;
@@ -25,6 +26,7 @@ const productSchema: Schema = new Schema(
     description: { type: String, required: true },
     price: { type: priceSchema, required: true },
     stock: { type: Number, required: true, min: 0 },
+    createdBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
   },
   { timestamps: true },
 );
