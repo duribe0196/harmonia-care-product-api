@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "local:create-product": " npx ts-node local/index.ts -- create-product"
+    "local:create-product": " npx ts-node local/index.ts -- create-product",
+    "local:get-products": " npx ts-node local/index.ts -- get-products"
   },
   "keywords": [],
   "author": "",

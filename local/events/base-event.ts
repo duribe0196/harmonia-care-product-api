@@ -1,10 +1,12 @@
 interface IGetBaseEventsArgs {
   path: string;
   method: string;
-  body: Record<string, any>;
+  body?: Record<string, any>;
+  queryStringParameters?: Record<string, any>;
 }
 export const getBaseEvent = (args: IGetBaseEventsArgs) => {
-  const { path, method, body } = args;
+  const { path, method, body, queryStringParameters } = args;
+  const queryParams = queryStringParameters ? queryStringParameters : {};
   return {
     resource: "/services/carwash/create",
     path: path,
@@ -21,9 +23,7 @@ export const getBaseEvent = (args: IGetBaseEventsArgs) => {
       Accept: ["application/json, text/plain, */*"],
       "Accept-Encoding": ["gzip, deflate, br"],
     },
-    queryStringParameters: {
-      foo: "bar",
-    },
+    queryStringParameters: queryParams,
     multiValueQueryStringParameters: {
       foo: ["bar"],
     },

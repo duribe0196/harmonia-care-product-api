@@ -1,5 +1,6 @@
 import { handleHttpRequests } from "../src/handlers";
 import * as createProduct from "./events/create-product";
+import * as getProducts from "./events/get-products";
 
 const eventName = process.argv[3];
 let response;
@@ -13,8 +14,18 @@ let response;
       );
       console.log("----------RESPONSE-----------\n", response);
       break;
+    case "get-products":
+      response = await handleHttpRequests(
+        getProducts.event as any,
+        getProducts.context as any,
+        getProducts.cb,
+      );
+      console.log("----------RESPONSE-----------\n", response);
+      break;
 
     default:
       break;
   }
+
+  process.exit(0);
 })();

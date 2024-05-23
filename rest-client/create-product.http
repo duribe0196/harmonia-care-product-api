@@ -4,8 +4,11 @@ Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-  "name": "test product",
-  "price": 20000,
+  "name": "test product2",
+  "price": {
+    "amount": 20000,
+    "currency": "COP"
+  },
   "description": "test description",
   "stock": 1
 }

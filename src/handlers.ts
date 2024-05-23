@@ -3,6 +3,7 @@ dotenv.config();
 import { APIGatewayEvent, Context, Callback } from "aws-lambda";
 import { getNotFoundResponse } from "./utils";
 import createProduct from "./http/create-product";
+import getProducts from "./http/get-products";
 import connectDB from "./db";
 
 export const handleHttpRequests = async (
@@ -47,6 +48,9 @@ export const handleHttpRequests = async (
         },
         callback,
       );
+
+    case "GET-/product":
+      return await getProducts(event);
 
     default:
       return getNotFoundResponse(path, httpMethod);
