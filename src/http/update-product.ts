@@ -44,9 +44,8 @@ export default async function updateProduct(
       };
     }
 
+    if (name !== productFound.name) productFound.name = name;
     productFound.price = new Price(price.amount);
-    productFound.name = name;
-    productFound.description = description;
     productFound.stock = stock;
     const productUpdated = await productFound.save();
 

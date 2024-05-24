@@ -1,0 +1,16 @@
+### PUT request to update a product
+PUT {{baseUrl}}/product/664fd7ed85283d550f52ef73
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "name": "test product updated2",
+  "price": {
+    "amount": 30000,
+    "currency": "COP"
+  },
+  "description": "test description",
+  "stock": 30
+}
+
+###
