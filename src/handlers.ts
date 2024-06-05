@@ -41,7 +41,7 @@ export const handleHttpRequests = async (
 
   await connectDB();
   switch (resource) {
-    case "POST-/product/create":
+    case "POST-/products/create":
       const name = requestBody.name;
       const price = requestBody.price;
       const description = requestBody.description;
@@ -54,10 +54,10 @@ export const handleHttpRequests = async (
     case "GET-/products":
       return await getProducts(event);
 
-    case `GET-/product/${event.pathParameters?.productId}`:
+    case `GET-/products/${event.pathParameters?.productId}`:
       return await getProductById(event.pathParameters?.productId);
 
-    case `PUT-/product/${event.pathParameters?.productId}`:
+    case `PUT-/products/${event.pathParameters?.productId}`:
       const productId = event.pathParameters?.productId;
       if (!productId)
         return {
