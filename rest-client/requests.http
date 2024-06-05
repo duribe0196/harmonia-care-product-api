@@ -3,7 +3,7 @@ GET {{baseUrl}}/products
 Content-Type: application/json
 
 ### GET request to get product by id
-GET {{baseUrl}}/product/12345
+GET {{baseUrl}}/products/664fd7ed85283d550f52ef73
 Content-Type: application/json
 
 
@@ -23,7 +23,7 @@ Authorization: Bearer {{authToken}}
 }
 
 ### PUT request to update a product
-PUT {{baseUrl}}/product/664fd7ed85283d550f52ef73
+PUT {{baseUrl}}/products/664fd7ed85283d550f52ef73
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
@@ -34,6 +34,6 @@ Authorization: Bearer {{authToken}}
     "currency": "COP"
   },
   "description": "test description",
-  "stock": 10
+  "stock": 9
 }
 
