@@ -1,10 +1,12 @@
 import * as dotenv from "dotenv";
 dotenv.config();
 import { APIGatewayEvent, Context, Callback } from "aws-lambda";
+
 import { getNotFoundResponse } from "./utils";
 import updateProduct from "./http/update-product";
 import createProduct from "./http/create-product";
 import getProducts from "./http/get-products";
+import getProductById from "./http/get-product-by-id";
 import connectDB from "./db";
 
 export const handleHttpRequests = async (
@@ -30,6 +32,8 @@ export const handleHttpRequests = async (
         }),
       };
     }
+  } else {
+    requestBody = {};
   }
 
   const resource = `${httpMethod}-${path}`;
@@ -47,8 +51,11 @@ export const handleHttpRequests = async (
         userSub,
       });
 
-    case "GET-/product":
+    case "GET-/products":
       return await getProducts(event);
+
+    case `GET-/product/${event.pathParameters?.productId}`:
+      return await getProductById(event.pathParameters?.productId);
 
     case `PUT-/product/${event.pathParameters?.productId}`:
       const productId = event.pathParameters?.productId;

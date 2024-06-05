@@ -1,5 +1,0 @@
-### GET request to example server
-GET {{baseUrl}}/product
-Content-Type: application/json
-
-###

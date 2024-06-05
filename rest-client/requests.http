@@ -1,0 +1,39 @@
+### GET request to get products
+GET {{baseUrl}}/products
+Content-Type: application/json
+
+### GET request to get product by id
+GET {{baseUrl}}/product/12345
+Content-Type: application/json
+
+
+### POST request to create a new product
+POST {{baseUrl}}/product/create
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "name": "Acondicionador",
+  "price": {
+    "amount": 34000,
+    "currency": "COP"
+  },
+  "description": "test acondicionador",
+  "stock": 1
+}
+
+### PUT request to update a product
+PUT {{baseUrl}}/product/664fd7ed85283d550f52ef73
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "name": "Shampoo Natural Air",
+  "price": {
+    "amount": 30000,
+    "currency": "COP"
+  },
+  "description": "test description",
+  "stock": 10
+}
+
